@@ -14,11 +14,12 @@
   }
 
   if ($db->connect_error) {
+    //exit script if cannot connect
     die("Connection failed: " . $conn->connect_error);
-    echo "<script>console.log('CANNOT CONNECT!');</script>";
+    //echo "<script>console.log('CANNOT CONNECT!');</script>";
   }
   else {
-    echo "<script>console.log('database connection established')</script>";
+    //echo "<script>console.log('database connection established')</script>";
   }
 
   require("functions.php");

@@ -1,7 +1,6 @@
 <?php
   $title = "Pagrindinis";
   require_once("shared/header.php");
-
 ?>
 
 <body>
@@ -88,14 +87,4 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="javascript/main.js"></script>
 </html>
-<?php
-if(isset($_GET['p']) && isset($_GET['e'])){
-  //deletepost
-  if($_GET['p'] === 'announcements'){
-    echo "<script>announcements();</script>";
-  }
-  else {
-    echo "<script>home();</script>";
-  }
-}
-?>
+<script><?php directToPage(); ?> </script>

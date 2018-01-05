@@ -92,11 +92,6 @@ function commentsCar(car){
   var carId = car.id.replace( /^\D+/g, '');
 }
 
-//editCar.php js
-function submitCarEdit(){
-
-}
-
 //******************************
 //announcemenets****************
 function submitNewAnnouncement(){
@@ -122,5 +117,16 @@ function newAnnouncement(){
     }//end if
   }//end function()
   xmlhttp.open("GET", "php/addNewAnnouncement.php");
+  xmlhttp.send();
+}
+
+function loadEditMsg(id){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      body.innerHTML = this.responseText;
+    }//end if
+  }//end function()
+  xmlhttp.open("GET", "php/editAnnouncement.php?id="+id);
   xmlhttp.send();
 }

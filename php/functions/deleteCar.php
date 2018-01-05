@@ -10,6 +10,6 @@
   if(!$result)
     exit("Could not connect to the database");
   else if($result === true)
-    echo "Successfuly deleted car at id=".$id;
+    header("Location: ../../index.php?p=cars");
 
 ?>

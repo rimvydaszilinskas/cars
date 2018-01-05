@@ -11,5 +11,4 @@
   $car = mysqli_fetch_assoc($result);
 
   echo $car['make'];
-
 ?>

@@ -1,6 +1,6 @@
 <?php
   require_once("../db/init.php");
-  if(check_for_announcements()){
+  if(check_for_all_announcements()){
     //only get this if there are any announcements
     $announcements = get_all_announcements();
 ?>
@@ -25,8 +25,8 @@
           <td><?php echo $announcement['message']; ?></td>
           <td><?php echo $announcement['createDate']; ?></td>
           <td><?php echo ($announcement['active'] == '1' ? "Taip" : "Ne"); ?></td>
-          <td><a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-          <td><a><i class="fa fa-power-off" aria-hidden="true"></i></a></td>
+          <td><a href="#" onclick="loadEditMsg(<?php echo $announcement['id']; ?>)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+          <td><a href="php/functions/hidePost.php?id=<?php echo $announcement['id']; ?>&active=<?php echo $announcement['active'];?>"><i class="fa fa-power-off" aria-hidden="true"></i></a></td>
           <td><a href="php/functions/deletePost.php?id=<?php echo $announcement['id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 
         </tr>
