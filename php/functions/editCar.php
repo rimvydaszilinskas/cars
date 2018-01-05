@@ -6,9 +6,9 @@
   $license_plate = $_REQUEST['lp'];
   $mileage = $_REQUEST['mileage'];
   $maintenance = $_REQUEST['maintenance'];
-  $carId = $_REQUEST['id'];
+  //$carId = $_REQUEST['id'];
 
-  $sql = "UPDATE cars SET make='$make', year='$year', license_plate='$license_plate', mileage='$mileage', maintenance='$maintenance' WHERE id='$carId'";
+  $sql = "UPDATE cars SET make='$make', year='$year', license_plate='$license_plate', mileage='$mileage', maintenance='$maintenance' WHERE id='1';";
 
   $result = mysqli_query($db, $sql);
 
@@ -17,5 +17,5 @@
   else
     $answer = "could not connect";
 
-  echo $answer; 
+  echo $answer;
 ?>

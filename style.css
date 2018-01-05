@@ -113,8 +113,53 @@ body {
   .namedNav{
     display: none;
   }
+
+  .card:first-of-type{
+      margin-left: 0;
+  }
+
+  .card:not(:first-of-type){
+    margin-left: 0;
+    margin-top: 2em;
+  }
 }
 
 a h4{
   display: inline;
+}
+
+/* main */
+.post-date{
+  font-size: 0.7em;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.post-title{
+  font-weight: bold;
+  color: #5a7391;
+}
+
+.card{
+  background: #F1F3FA;
+  margin-left: 2em;
+  padding-top: 1em;
+}
+
+.card-title{
+  text-align: center;
+  color: #5a7391;
+}
+/* affect only elements that are higher in count than 3 */
+.card:nth-child(n+3){
+  margin-top: 2em;
+}
+
+.fa{
+  min-width: 30px;
+  text-align: center;
+}
+
+.center{
+  text-align: center;
 }

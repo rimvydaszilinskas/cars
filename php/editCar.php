@@ -13,7 +13,7 @@
 ?>
 
 <form>
-  <p class="lead" id="carIdEdit"><?php echo $carId; ?></p>
+  <p class="lead">Redaguojamos masinos ID: <span id="carIdEdit"><?php echo $carId; ?></span></p>
   <div class="form-group">
     <label for="editMake">Gamintojas</label>
     <input type="text" class="form-control" id="editMake" value="<?php echo $car['make'] ?>"></input>

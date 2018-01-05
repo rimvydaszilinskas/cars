@@ -1,6 +1,7 @@
 <?php
-$title = "Pagrindinis";
-require_once("shared/header.php");
+  $title = "Pagrindinis";
+  require_once("shared/header.php");
+
 ?>
 
 <body>
@@ -25,6 +26,7 @@ require_once("shared/header.php");
   				<!-- END SIDEBAR USER TITLE -->
   				<!-- SIDEBAR BUTTONS -->
   				<div class="profile-userbuttons">
+            <!-- display only if the user has a drive that day -->
   					<button type="button" class="btn btn-success btn-sm">Drive</button>
   					<button type="button" class="btn btn-danger btn-sm">Messages</button>
   				</div>
@@ -35,14 +37,27 @@ require_once("shared/header.php");
               <li class="nav-item active" onclick="home()" id="homelink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-home" aria-hidden="true"></i></h4> Pagrindinis</a>
               </li>
+              <li class="nav-item" onclick="reserve()" id="reservelink">
+                <a class="nav-link" href="#"><h4><i class="fa fa-calendar" aria-hidden="true"></i></h4> Rezervuoti</a>
+              </li>
+              <!-- shown only to the admin -->
               <li class="nav-item" onclick="cars()" id="carslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-car" aria-hidden="true"></i></h4> Automobiliai</a>
               </li>
+              <!-- show only to the admin -->
               <li class="nav-item" onclick="users()" id ="userslink">
                 <a class="nav-link" href="#" ><h4><i class="fa fa-users" aria-hidden="true"></i></h4> Vartotojai</a>
               </li>
+              <!-- shown only to the admin -->
+              <li class="nav-item" onclick="announcements()" id ="announcementslink">
+                <a class="nav-link" href="#"><h4><i class="fa fa-bullhorn" aria-hidden="true"></i></h4> Pranesimai</a>
+              </li>
+              <!-- shown only to the admin -->
               <li class="nav-item" onclick="settings()" id ="settingslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-cog" aria-hidden="true"></i></h4> Nustatymai</a>
+              </li>
+              <li class="nav-item" id ="logoutlink">
+                <a class="nav-link" href="logout.php"><h4><i class="fa fa-sign-out" aria-hidden="true"></i></h4> Atsijungti</a>
               </li>
             </ul>
   				</div>
@@ -53,7 +68,7 @@ require_once("shared/header.php");
       <!-- Start the body -->
   		<div class="col-md-9 contentHolder">
           <div class="content" id="mainContent">
-            <?php require("php/home.php"); ?>
+            <!-- content is loaded automatically by js -->
           </div>
   		</div>
   	</div>
@@ -73,3 +88,14 @@ require_once("shared/header.php");
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="javascript/main.js"></script>
 </html>
+<?php
+if(isset($_GET['p']) && isset($_GET['e'])){
+  //deletepost
+  if($_GET['p'] === 'announcements'){
+    echo "<script>announcements();</script>";
+  }
+  else {
+    echo "<script>home();</script>";
+  }
+}
+?>

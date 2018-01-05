@@ -20,4 +20,6 @@
   else {
     echo "<script>console.log('database connection established')</script>";
   }
+
+  require("functions.php");
 ?>

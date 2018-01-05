@@ -21,13 +21,31 @@ function cars(){
   fillContent("cars");
 }
 
+function announcements(){
+  clearActive("announcementslink");
+  fillContent("announcements");
+}
+
+function reserve(){
+  clearActive("reservelink");
+  fillContent("reserve");
+}
+
+function profile(){
+  clearActive("profilelink");
+  fillContent("profile");
+}
+
+//pass in the element to know which one to set back
 function clearActive(element){
   var menuItems = document.getElementsByClassName("nav-item");
 
+  //deactivate all active classes on all buttons
   for(var i = 0; i < menuItems.length; i++){
       menuItems[i].classList.remove("active");
   }
 
+  //set back the just pressed button
   document.getElementById(element).className += " active";
 }
 
@@ -47,7 +65,7 @@ function deleteCar(car){
   var carId = car.id.replace( /^\D+/g, '');
 
   if (confirm('Ar tikrai norite istrinti?')) {
-    xmlhttp = new XMLHttpRequest();
+    var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
       if(this.readyState == 4 && this.status == 200){
         alert(this.responseText);
@@ -60,7 +78,7 @@ function deleteCar(car){
 
 function editCar(car){
   var carId = car.id.replace( /^\D+/g, '');
-  xmlhttp = new XMLHttpRequest();
+  var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200){
       body.innerHTML = this.responseText;
@@ -74,28 +92,35 @@ function commentsCar(car){
   var carId = car.id.replace( /^\D+/g, '');
 }
 
-//edit car js
+//editCar.php js
 function submitCarEdit(){
-  var make = document.getElementById("editMake").value;
-  var year = document.getElementById("editYear").value;
-  var license_plate = document.getElementById("editLicense_plate").value;
-  var mileage = document.getElementById("editMileage").value;
-  var maintenance = document.getElementById("editMaintenance").checked;
-  var carId = document.getElementById("carIdEdit").value;
+
+}
+
+//******************************
+//announcemenets****************
+function submitNewAnnouncement(){
+  var title = document.getElementById("announcementName").value;
+  var msg = document.getElementById("announcementMessage").value;
 
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200){
-      fillContent("cars");
+      body.innerHTML = this.responseText;
     }//end if
-    else{
-      alert("Nepavyko!")
-    }
   }//end function()
-  xmlhttp.open("GET", "php/functions/editCar.php?make=" + make + "&year=" + year + "&lp=" + license_plate + "&mileage=" + mileage + "&maintenance=" + maintenance==true?"1":"0" + "&id=" + carId);
+  xmlhttp.open("GET", "php/functions/addNewAnnouncement.php?title=" + title + "&msg=" + msg);
   xmlhttp.send();
 
-  alert(maintenance);
 }
 
-//
+function newAnnouncement(){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      body.innerHTML = this.responseText;
+    }//end if
+  }//end function()
+  xmlhttp.open("GET", "php/addNewAnnouncement.php");
+  xmlhttp.send();
+}

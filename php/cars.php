@@ -8,7 +8,8 @@
   if(!$result)
     exit("Could not connect to the database");
 ?>
-<table class="table">
+<div class="col-md-12">
+<table class="table table-responsive">
   <tr>
     <th scope="col">ID</th>
     <th scope="col">Modelis</th>
@@ -42,3 +43,4 @@
     <td></td>
   </tr>
 </table>
+</div>
