@@ -1,6 +1,9 @@
 <?php
   $title = "Pagrindinis";
   require_once("shared/header.php");
+  session_start();
+  if(!isset($_SESSION['id']))
+    header("location: login.php");
 ?>
 
 <body>
@@ -16,10 +19,10 @@
   				<!-- SIDEBAR USER TITLE -->
   				<div class="profile-usertitle">
   					<div class="profile-usertitle-name">
-  						Rimvydas Zilinskas
+  						<?php echo $_SESSION['name']; ?>
   					</div>
   					<div class="profile-usertitle-job">
-  						Developer
+  						<?php echo findUserPosition($_SESSION['id']); ?>
   					</div>
   				</div>
   				<!-- END SIDEBAR USER TITLE -->
@@ -40,6 +43,7 @@
                 <a class="nav-link" href="#"><h4><i class="fa fa-calendar" aria-hidden="true"></i></h4> Rezervuoti</a>
               </li>
               <!-- shown only to the admin -->
+              <?php if(isset($_SESSION['admin'])){ ?>
               <li class="nav-item" onclick="cars()" id="carslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-car" aria-hidden="true"></i></h4> Automobiliai</a>
               </li>
@@ -51,6 +55,7 @@
               <li class="nav-item" onclick="announcements()" id ="announcementslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-bullhorn" aria-hidden="true"></i></h4> Pranesimai</a>
               </li>
+              <?php } ?>
               <!-- shown only to the admin -->
               <li class="nav-item" onclick="settings()" id ="settingslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-cog" aria-hidden="true"></i></h4> Nustatymai</a>

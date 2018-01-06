@@ -163,3 +163,13 @@ a h4{
 .center{
   text-align: center;
 }
+
+/* login */
+@media (min-width: 767.99px) {
+  .loginBox{
+    margin-top: 15%;
+    background: white;
+    border-radius: 10px;
+
+  }
+}

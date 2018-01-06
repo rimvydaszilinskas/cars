@@ -25,15 +25,15 @@
       <td><?php echo $user['email']; ?></td>
       <td>
         <!-- delete user -->
-        <button type="button" class="btn btn-danger" id="delete"><i class="fa fa-trash-o" aria-hidden="true" name="delete"></i></button>
+        <button type="button" class="btn btn-danger" onclick="deleteUser('<?php $user['name']; ?>', <?php echo $user['id']; ?>)" id="delete"><i class="fa fa-trash-o" aria-hidden="true" name="delete"></i></button>
+      </td>
+      <td>
         <!-- edit user -->
+        <button type="button" class="btn btn-dark" onclick="editUser(<?php echo $user['id']; ?>)" id="edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
       </td>
       <td>
-        <button type="button" class="btn btn-dark" id="edit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
         <!-- reset user password -->
-      </td>
-      <td>
-        <button type="button" class="btn btn-dark" id="resetPassword"><i class="fa fa-key" aria-hidden="true"></i></button>
+        <button type="button" class="btn btn-dark" onclick="resetUserPassword(<?php echo $user['id']; ?>)" id="resetPassword"><i class="fa fa-key" aria-hidden="true"></i></button>
       </td>
     </tr>
   <?php } ?>

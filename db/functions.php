@@ -90,5 +90,33 @@
     }
   }
 
+  //find user according to username
+  function findUser($username){
+    global $db;
 
+    $sql = "SELECT * FROM users WHERE username='$username' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      return -1;
+
+    $user = mysqli_fetch_assoc($result);
+    return $user;
+  }
+
+  function findUserPosition($id){
+    global $db;
+
+    $sql = "SELECT position FROM users WHERE id='$id' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect");
+
+    $user = mysqli_fetch_assoc($result);
+
+    return $user['position'];
+  }
 ?>

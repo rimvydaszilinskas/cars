@@ -8,6 +8,7 @@
   if(!$result)
     exit("Could not connect to the database");
 ?>
+
 <div class="col-md-12">
 <table class="table table-responsive">
   <tr>
@@ -19,7 +20,7 @@
     <th scope="col"></th>
   </tr>
 <?php while($car = mysqli_fetch_assoc($result)){?>
-    <tr>
+    <tr <?php if($car['maintenance'] === '1') echo 'class="table-danger"'; ?>>
       <td><?php echo $car['id']; ?></td>
       <td><?php echo $car['make']; ?></td>
       <td><?php echo preg_replace('/\s+/', '', $car['license_plate']); ?></td>
