@@ -1,39 +1,66 @@
-const body = document.getElementById("mainContent");
+const body = document.getElementById("content-no-errors");
 
 //menu js
 function home(){
   clearActive("homelink");
   fillContent("home");
+  showNote("home");
 }
 
 function users(){
   clearActive("userslink");
   fillContent("users");
+  showNote("user");
 }
 
 function settings(){
   clearActive("settingslink");
   fillContent("settings");
+  showNote("settings");
 }
 
 function cars(){
   clearActive("carslink");
   fillContent("cars");
+  showNote("car");
 }
 
 function announcements(){
   clearActive("announcementslink");
   fillContent("announcements");
+  showNote("announcements");
 }
 
 function reserve(){
   clearActive("reservelink");
   fillContent("reserve");
+  showNote("reserve");
 }
 
 function profile(){
   clearActive("profilelink");
   fillContent("profile");
+  showNote("profile");
+}
+
+//hide all notes
+function hideNotes(){
+  var notes = document.getElementsByClassName("index_note");
+  for(var i = 0; i < notes.length; i++){
+      notes[i].style.display = "none";
+  }
+}
+
+//show the note needed
+function showNote(classname){
+  var name = classname + "_note";
+  var notes = document.getElementsByClassName(name);
+
+  for(var i = 0; i < notes.length; i++){
+    var note = notes[i].innerHTML.trim();
+    if(note !== "")
+      notes[i].style.display = "block";
+  }
 }
 
 //pass in the element to know which one to set back
@@ -50,6 +77,7 @@ function clearActive(element){
 }
 
 function fillContent(filename){
+  hideNotes();
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status == 200){
@@ -58,6 +86,7 @@ function fillContent(filename){
   }//end function()
   xmlhttp.open("GET", "php/" + filename + ".php");
   xmlhttp.send();
+
 }
 
 //cars.php js
@@ -163,7 +192,6 @@ function editUser(id){
   xmlhttp.open("GET", "php/editUser.php?id="+id);
   xmlhttp.send();
 }
-
 function resetUserPassword(id){
 
 }

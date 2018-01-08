@@ -4,6 +4,34 @@
   session_start();
   if(!isset($_SESSION['id']))
     header("location: login.php");
+
+  //vars
+  $message = "";
+  $error = "";
+  $class = "";
+
+  //set variable for displaying correct messages
+  if(isset($_GET['m'])){
+    $msg = $_GET['m'];
+    if($msg == "user_added"){
+      $user_added = $_GET['username'];
+      $message = "Sekmingai pridetas vartotojas: " . $user_added . ".";
+      $class = "user_note";
+    } else if($msg == "user_bad"){
+      $error = "Neivesti visi duomenys!";
+      $class = "user_note";
+    }
+    else if($msg == "car_add_error" || $msg == "car_edit_error"){
+      $error = "<b>Klaida</b>Negalima prisijungti prie duomenu bazes!";
+      $class = "car_note";
+    } else if($msg == "car_added"){
+      $message = "Automobilis pridetas sekmingai!";
+      $class = "car_note";
+    } else if($msg == "car_edited"){
+      $message = "Automobilis pakoreguotas!";
+      $class = "car_note";
+    }
+  }
 ?>
 
 <body>
@@ -36,8 +64,8 @@
   				<!-- SIDEBAR MENU -->
   				<div class="profile-usermenu">
             <ul class="nav flex-column">
-              <li class="nav-item active" onclick="home()" id="homelink">
-                <a class="nav-link" href="#"><h4><i class="fa fa-home" aria-hidden="true"></i></h4> Pagrindinis</a>
+              <li class="nav-item active" id="homelink">
+                <a class="nav-link" href="index.php"><h4><i class="fa fa-home" aria-hidden="true"></i></h4> Pagrindinis</a>
               </li>
               <li class="nav-item" onclick="reserve()" id="reservelink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-calendar" aria-hidden="true"></i></h4> Rezervuoti</a>
@@ -72,7 +100,17 @@
       <!-- Start the body -->
   		<div class="col-md-9 contentHolder">
           <div class="content" id="mainContent">
-            <!-- content is loaded automatically by js -->
+
+            <div class="alert alert-danger index_note <?php echo $class; ?>" role="alert">
+              <?php echo $error; ?>
+            </div>
+            <div class="alert alert-success index_note <?php echo $class; ?>" role="alert">
+              <?php echo $message; ?>
+            </div>
+
+            <div id="content-no-errors">
+              <!-- content is loaded automatically by js -->
+            </div>
           </div>
   		</div>
   	</div>

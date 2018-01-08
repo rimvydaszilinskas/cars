@@ -15,8 +15,10 @@
 
   $result = mysqli_query($db, $sql);
 
-  if($result == false)
-    exit("Could not connect to the database");
+  if($result == false){
+    header("Location: ../../index.php?p=cars&m=car_edit_error");
+    exit("Cannot connect to database");
+  }
   else
-    header("Location: ../../index.php?p=cars");
+    header("Location: ../../index.php?p=cars&m=car_edited");
 ?>

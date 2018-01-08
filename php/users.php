@@ -1,7 +1,7 @@
 <?php
   require_once("../db/init.php");
 
-  $sql = "SELECT * FROM users";
+  $sql = "SELECT * FROM users ORDER BY id ASC";
 
   $result = mysqli_query($db, $sql);
 
@@ -9,6 +9,7 @@
     exit("Could not connect to the database");
 ?>
 <div class="col-md-12">
+
 <table class="table table-responsive">
   <tr>
     <th scope="col">ID</th>
@@ -45,5 +46,5 @@
     <td></td>
   </tr>
 </table>
-<button type="button" class="btn btn-success">Prideti nauja vartotoja</button>
+<button type="button" class="btn btn-success" onclick="fillContent('addNewUser')">Prideti nauja vartotoja</button>
 </div>

@@ -119,4 +119,72 @@
 
     return $user['position'];
   }
+
+  function get_hashed_default_password(){
+    return password_hash("password", PASSWORD_BCRYPT);
+  }
+
+  //returns an array of cars that today are free and not in repairs
+  function get_free_cars(){
+    global $db;
+    $cars = [];
+    $sql = "SELECT * FROM cars WHERE maintenance='0'";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      return $cars;
+
+    //get requested and reserved cars list
+
+    while($car = mysqli_fetch_assoc($result)){
+      //compare if the today the car is free
+
+      //store the car in the cars array
+      $cars[] = $car;
+    }
+
+    return $cars;
+  }
+
+  function get_month_number(){
+    return date('m');
+  }
+
+  function get_month_name($month, $year){
+    return date('F');
+  }
+
+  function get_year(){
+    return date('Y');
+  }
+
+  //return current date
+  function get_day_number(){
+    return date('j');
+  }
+
+  function get_week_day_number($day, $month, $year){
+    return date('N');
+  }
+
+  function get_week_day_name($day, $month, $year){
+    return date('w');
+  }
+
+  function get_start_of_month_number($month, $year){
+    date('N', mktime(0, 0, 0, get_month_number(), 1, get_year()));
+  }
+
+  function get_day_count($month, $year){
+    return date('t');
+  }
+
+  function check_end_of_week($day, $month, $year){
+    $weekday = date('N', mktime(0, 0, 0, $month, $day, $year));
+    if($weekday == 7)
+      return true;
+    else
+      return false;
+  }
 ?>
