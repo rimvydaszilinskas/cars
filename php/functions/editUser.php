@@ -14,5 +14,5 @@
   if($result == false)
     exit("Could not connect to the database");
   else
-    header("Location: ../../index.php?p=users");
+    header("Location: ../../index.php?p=users&m=user_edit_success");
 ?>

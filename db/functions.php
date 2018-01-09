@@ -105,6 +105,20 @@
     return $user;
   }
 
+  function find_user_name($id){
+    global $db;
+
+    $sql = "SELECT name FROM users WHERE id='$id' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      return -1;
+
+    $user = mysqli_fetch_assoc($result);
+    return $user['name'];
+  }
+
   function findUserPosition($id){
     global $db;
 
@@ -121,7 +135,24 @@
   }
 
   function get_hashed_default_password(){
-    return password_hash("password", PASSWORD_BCRYPT);
+    global $db;
+
+    $sql = "SELECT * FROM settings WHERE setting='default_password' LIMIT 1;";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+    
+    return password_hash("slaptazodis", PASSWORD_BCRYPT);
+  }
+
+  //returns true if passwords match
+  //othervise returns false
+  function authorize_user($password_entered, $password){
+    if(password_verify($password_entered, $password))
+      return true;
+    return false;
   }
 
   //returns an array of cars that today are free and not in repairs
@@ -145,6 +176,10 @@
     }
 
     return $cars;
+  }
+
+  function today(){
+    return date('j');
   }
 
   function get_month_number(){
@@ -186,5 +221,51 @@
       return true;
     else
       return false;
+  }
+
+  function has_drive($id){
+    return false;
+  }
+
+  // find_all_reservations(){
+  //
+  // }
+  //
+  // find_user_reservations(){
+  //
+  // }
+
+  function find_unnaproved_requests(){
+    global $db;
+
+    $today_day = today();
+    $today_month = get_month_number();
+    $today_year = get_year();
+
+    $sql = "SELECT * FROM reservations WHERE approved='0' AND day>='$today_day' AND month>='$today_month' AND year>='$today_year'";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result){
+      return null;
+    }
+    return $result;
+  }
+
+  function is_admin($id){
+    global $db;
+
+    $sql = "SELECT admin FROM users WHERE id='$id' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+
+    $admin = mysqli_fetch_assoc($result);
+
+    if($admin['admin']=='1')
+      return true;
+    return false;
   }
 ?>

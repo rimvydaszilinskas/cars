@@ -16,7 +16,7 @@
   <p class="lead">Redaguojamos masinos ID: <span id="carIdEdit"><?php echo $carId; ?></span></p>
   <div class="form-group">
     <label for="editMake">Gamintojas</label>
-    <input type="text" class="form-control" id="editMake" name="make" value="<?php echo $car['make'] ?>"></input>
+    <input type="text" class="form-control" id="editMake" name="make" value="<?php echo $car['make']; ?>"></input>
   </div>
   <div class="form-group">
     <label for="editYear">Metai</label>

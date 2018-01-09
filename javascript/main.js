@@ -1,5 +1,4 @@
 const body = document.getElementById("content-no-errors");
-
 //menu js
 function home(){
   clearActive("homelink");
@@ -192,6 +191,7 @@ function editUser(id){
   xmlhttp.open("GET", "php/editUser.php?id="+id);
   xmlhttp.send();
 }
-function resetUserPassword(id){
 
+function resetUserPassword(id){
+  window.location.href = "php/functions/resetPassword.php?id=" + id;
 }

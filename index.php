@@ -20,8 +20,7 @@
     } else if($msg == "user_bad"){
       $error = "Neivesti visi duomenys!";
       $class = "user_note";
-    }
-    else if($msg == "car_add_error" || $msg == "car_edit_error"){
+    } else if($msg == "car_add_error" || $msg == "car_edit_error"){
       $error = "<b>Klaida</b>Negalima prisijungti prie duomenu bazes!";
       $class = "car_note";
     } else if($msg == "car_added"){
@@ -30,6 +29,26 @@
     } else if($msg == "car_edited"){
       $message = "Automobilis pakoreguotas!";
       $class = "car_note";
+    } else if($msg == "user_edit_success"){
+      $message = "Vartotojas issaugotas!";
+      $class = "user_note";
+    } else if($msg == "reserve_success"){
+      $message = "Rezervacija sekminga!";
+      $class = "reserve_note";
+    } else if($msg == "reserve_error"){
+      $error = "Klaida!";
+      $class = "reserve_note";
+    } else if($msg == "user_pw_fail"){
+      $error = "Nepavyko is naujo nustatyti slaptazodzio!";
+      $class = "user_note";
+    } else if($msg == "user_pw_success"){
+      $id = $_GET['id'];
+      $user_name = find_user_name($id);
+      $message = "Vartotojo $user_name slaptazodis nustatytas sekmingai!";
+      $class = "user_note";
+    } else if($msg == "password_change_success"){
+      $message = "Sekmingai pakeistas slaptazodis!";
+      $class = "home_note";
     }
   }
 ?>
@@ -51,14 +70,17 @@
   					</div>
   					<div class="profile-usertitle-job">
   						<?php echo findUserPosition($_SESSION['id']); ?>
+              <?php if(isset($_SESSION['admin'])) echo "<br>Administratorius"?>
   					</div>
   				</div>
   				<!-- END SIDEBAR USER TITLE -->
   				<!-- SIDEBAR BUTTONS -->
   				<div class="profile-userbuttons">
             <!-- display only if the user has a drive that day -->
+            <?php if(has_drive($_SESSION['id'])){ ?>
   					<button type="button" class="btn btn-success btn-sm">Drive</button>
-  					<button type="button" class="btn btn-danger btn-sm">Messages</button>
+            <?php } ?>
+  					<button type="button" class="btn btn-danger btn-sm">Zinutes</button>
   				</div>
   				<!-- END SIDEBAR BUTTONS -->
   				<!-- SIDEBAR MENU -->
@@ -129,5 +151,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="javascript/main.js"></script>
+<script src="javascript/jquery.js"></script>
 </html>
+<!-- used to load the content as soon as the page loads -->
 <script><?php directToPage(); ?> </script>

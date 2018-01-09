@@ -7,6 +7,7 @@
 
 <div class="col-md-12">
   <h1><?php echo get_month_name($month, $year); ?></h1>
+  <div id="date-hidden" hidden><?php echo $month . "-" . $year; ?></div>
   <table class="table table-responsive table-bordered">
     <tr>
       <th>Pirm</th>
@@ -23,7 +24,7 @@
         <?php for($y = 0; $y < get_start_of_month_number($month, $year); $y++){ ?>
           <td></td>
         <?php } ?>
-        <td class="reserve-calendar <?php echo ($today == $i) ? 'table-primary': ''; ?>"><?php echo $i; ?></td>
+        <td class="reserve-calendar <?php echo ($today == $i) ? 'table-primary': ''; ?>"><a class="reserve-link" href="#" data-toggle="modal" data-target="#postModal"><?php echo $i; ?></a></td>
         <!-- check if theres need to be a split for weeks -->
         <?php if(check_end_of_week($i, $month, $year)){ ?>
         </tr><tr>
@@ -31,4 +32,39 @@
       <?php } ?>
     </tr>
   </table>
+</div>
+
+
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Rezervuoti</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="submit" action="php/functions/reserveCar.php">
+      <div class="modal-body">
+
+          <div class="form-group">
+            <label for="date">Data</label>
+            <input type="text" class="form-control" id="date-reserve" name="date"></input>
+          </div>
+          <div class="form-group">
+            <label for="destination">Keliones tikslas</label>
+            <input type="text" class="form-control" id="destination" name="destination"></input>
+          </div>
+          <div>
+            <label for="info">Papildoma informacija</label>
+            <textarea type="text" class="form-control" id="info" name="info"></textarea>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button tupe="submit" class="btn btn-primary">Siusti</button>
+      </div>
+    </form>
+    </div>
+  </div>
 </div>

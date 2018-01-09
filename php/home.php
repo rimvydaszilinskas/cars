@@ -3,7 +3,7 @@
 
   //start session
   session_start();
-
+  $requests = find_unnaproved_requests();
   $is_announcements = check_for_announcements();
   $announcements = get_announcements();
   $cars = get_free_cars();
@@ -15,11 +15,12 @@
   <?php if($is_announcements){ ?>
     <div class="col-md-5 card">
       <h3 class="card-title">Pranesimai</h3>
-      <?php while($announcement = mysqli_fetch_assoc($announcements)){ ?>
-        <?php if($count == $max_posts){//display show more for a pop up?>
-          <hr/>
-          <p class="post-title show-more-post" data-toggle="modal" data-target="#postModal">Rodyti daugiau</p>
-        <?php break; } ?>
+      <?php while($announcement = mysqli_fetch_assoc($announcements)){?>
+      <?php
+        //check if count of post is greater than 2 if so, break and do not display anymore
+        if($count == 2)
+          break;
+      ?>
       <hr/>
       <p class="post-date">
         <?php echo $announcement['createDate']; ?>
@@ -35,8 +36,10 @@
         }?>
       </p>
       <?php $count++; } ?>
+      <hr/>
+      <p class="post-title show-more-post" data-toggle="modal" data-target="#postModal">Rodyti daugiau</p>
     </div>
-  <?php }//end if there's announcements ?>
+  <?php } //end if announcements ?>
 
   <?php if(count($cars) != 0){ ?>
     <div class="col-md-5 card">
@@ -57,12 +60,19 @@
     </div>
   <?php }?>
 
-  <?php if(isset($_SESSION['admin'])){ ?>
+  <?php if(isset($_SESSION['admin'])){
+          if($requests != null){?>
     <div class="col-md-5 card">
       <h5 class="card-title">Nepatvirtintos uzklausos</h5>
       <hr/>
+      <ul>
+      <?php while($request = mysqli_fetch_assoc($requests)){ ?>
+        <li><?php echo  $request['day'] . "/" . $request['month'] . "/". $request['year'] . " - " . $request['destination']." - ".find_user_name($request['userid']); ?></li>
+      <?php } ?>
+      </ul>
     </div>
-  <?php }?>
+  <?php }
+      }?>
 
   <?php if(isset($_SESSION['admin'])){ ?>
     <div class="col-md-5 card">
@@ -96,14 +106,14 @@
           <p class="post-body">
             <?php echo $post['message']; ?>
           </p>
-          <hr/>
-          <?php
-          }
-        ?>
-      </div>
-      <!-- <div class="modal-footer">
+           <hr/>
+           <?php
+           }
+         ?>
+       </div>
+       <!-- <div class="modal-footer">
 
-      </div> -->
+       </div> -->
+     </div>
     </div>
   </div>
-</div>
