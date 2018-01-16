@@ -134,6 +134,26 @@
     return $user['position'];
   }
 
+  //return association car object
+  function find_car($id){
+    //return null if it doesnt have car assigned
+    if($id == '0')
+      return null;
+
+    global $db;
+
+    $sql = "SELECT * FROM cars WHERE id='".$id."' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect");
+
+    $car = mysqli_fetch_assoc($result);
+
+    return $car;
+  }
+
   function get_hashed_default_password(){
     global $db;
 
@@ -143,7 +163,7 @@
 
     if(!$result)
       exit("Cannot connect to the database");
-    
+
     return password_hash("slaptazodis", PASSWORD_BCRYPT);
   }
 
@@ -178,6 +198,7 @@
     return $cars;
   }
 
+  //return the day number of the month
   function today(){
     return date('j');
   }
@@ -187,7 +208,7 @@
   }
 
   function get_month_name($month, $year){
-    return date('F');
+    return date('F', mktime(0, 0, 0, $month, 1, $year));
   }
 
   function get_year(){
@@ -200,19 +221,19 @@
   }
 
   function get_week_day_number($day, $month, $year){
-    return date('N');
+    return date('N', mktime(0, 0, 0, $month, $day, $year));
   }
 
   function get_week_day_name($day, $month, $year){
-    return date('w');
+    return date('w', mktime(0, 0, 0, $month, $day, $year));
   }
 
   function get_start_of_month_number($month, $year){
-    date('N', mktime(0, 0, 0, get_month_number(), 1, get_year()));
+    return date('N', mktime(0, 0, 0, $month, 1, $year));
   }
 
   function get_day_count($month, $year){
-    return date('t');
+    return date('t',mktime(0, 0, 0, $month, 1, $year));
   }
 
   function check_end_of_week($day, $month, $year){
@@ -224,12 +245,33 @@
   }
 
   function has_drive($id){
-    return false;
+    global $db;
+
+    $sql = "SELECT * FROM reservations WHERE userid='".$id."' AND day='".today()."' AND month='".get_month_number()."' AND year='".get_year()."' AND approved='1' LIMIT 1";
+
+    //$sql = "SELECT * FROM reservations WHERE userid='4' AND day='15' AND month='1' AND year='2018' AND approved='1' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+    if(!$result)
+      return false;
+    if(mysqli_num_rows($result) == 0)
+      return false;
+    return true;
   }
 
-  // find_all_reservations(){
-  //
-  // }
+  //find all reservations from today on
+  function find_all_reservations(){
+    global $db;
+
+    $sql = "SELECT * FROM reservations WHERE day>='".today()."' AND month>='".get_month_number()."' AND year>='".get_year()."' ORDER BY month ASC, day ASC";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      return null;
+
+    return $result;
+  }
   //
   // find_user_reservations(){
   //
@@ -242,7 +284,7 @@
     $today_month = get_month_number();
     $today_year = get_year();
 
-    $sql = "SELECT * FROM reservations WHERE approved='0' AND day>='$today_day' AND month>='$today_month' AND year>='$today_year'";
+    $sql = "SELECT * FROM reservations WHERE approved='0' AND day>='$today_day' AND month>='$today_month' AND year>='$today_year' ORDER BY year ASC, month ASC, day ASC";
 
     $result = mysqli_query($db, $sql);
 
@@ -268,4 +310,5 @@
       return true;
     return false;
   }
+
 ?>

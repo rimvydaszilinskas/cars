@@ -37,7 +37,7 @@
       </p>
       <?php $count++; } ?>
       <hr/>
-      <p class="post-title show-more-post" data-toggle="modal" data-target="#postModal">Rodyti daugiau</p>
+      <p class="post-title show-more-post" data-toggle="modal" data-target="#postModal">Rodyti daugiau...</p>
     </div>
   <?php } //end if announcements ?>
 
@@ -61,15 +61,23 @@
   <?php }?>
 
   <?php if(isset($_SESSION['admin'])){
+          $count = 0; //reset the count to 0
           if($requests != null){?>
     <div class="col-md-5 card">
       <h5 class="card-title">Nepatvirtintos uzklausos</h5>
       <hr/>
       <ul>
       <?php while($request = mysqli_fetch_assoc($requests)){ ?>
+        <?php if($count<3){ ?>
         <li><?php echo  $request['day'] . "/" . $request['month'] . "/". $request['year'] . " - " . $request['destination']." - ".find_user_name($request['userid']); ?></li>
-      <?php } ?>
+      <?php } else {
+          break;
+        }
+        $count++;
+      } ?>
       </ul>
+      <hr/>
+      <p class="post-title show-more-post">Ziureti visus...</p>
     </div>
   <?php }
       }?>
@@ -82,7 +90,7 @@
   <?php }?>
 </div>
 
-
+<!-- post modal -->
 <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

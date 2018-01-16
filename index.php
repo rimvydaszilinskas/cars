@@ -50,7 +50,7 @@
       $message = "Sekmingai pakeistas slaptazodis!";
       $class = "home_note";
     }
-  }
+  } // end isset check
 ?>
 
 <body>
@@ -105,8 +105,11 @@
               <li class="nav-item" onclick="announcements()" id ="announcementslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-bullhorn" aria-hidden="true"></i></h4> Pranesimai</a>
               </li>
+              <!-- show only to the admin -->
+              <li class="nav-item" onclick="reservations()" id ="reservationManagelink">
+                <a class="nav-link" href="#"><h4><i class="fa fa-calendar" aria-hidden="true"></i></h4> Rezervacijos</a>
+              </li>
               <?php } ?>
-              <!-- shown only to the admin -->
               <li class="nav-item" onclick="settings()" id ="settingslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-cog" aria-hidden="true"></i></h4> Nustatymai</a>
               </li>

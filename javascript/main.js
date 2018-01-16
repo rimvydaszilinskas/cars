@@ -42,6 +42,12 @@ function profile(){
   showNote("profile");
 }
 
+function reservations(){
+  clearActive("reservationManagelink");
+  fillContent("reservations");
+  showNote("reservations");
+}
+
 //hide all notes
 function hideNotes(){
   var notes = document.getElementsByClassName("index_note");
@@ -93,14 +99,7 @@ function deleteCar(car){
   var carId = car.id.replace( /^\D+/g, '');
 
   if (confirm('Ar tikrai norite istrinti?')) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function(){
-      if(this.readyState == 4 && this.status == 200){
-        alert(this.responseText);
-      }//end if
-    }//end function()
-    xmlhttp.open("GET", "php/functions/deleteCar.php?id=" + carId);
-    xmlhttp.send();
+    window.location.href = "php/functions/deleteCar.php?id=" + carId;
   }
 }
 

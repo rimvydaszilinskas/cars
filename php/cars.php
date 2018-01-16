@@ -16,6 +16,8 @@
       <th scope="col">Metai</th>
       <th scope="col">Rida</th>
       <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   <?php while($car = mysqli_fetch_assoc($result)){?>
       <tr <?php if($car['maintenance'] === '1') echo 'class="table-danger"'; ?>>
@@ -26,15 +28,17 @@
         <td><?php echo $car['mileage']; ?></td>
         <td>
           <button type="button" class="btn btn-danger" onclick="deleteCar(this)" id="delete-<?php echo $car['id'];?>"><i class="fa fa-trash-o" aria-hidden="true" name="delete"></i></button>
-          <button type="button" class="btn btn-dark" onclick="editCar(this)" id="edit-<?php echo $car['id'];?>"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-          <button type="button" class="btn btn-dark" onclick="commentsCar(this)" id="comments-<?php echo $car['id'];?>"><i class="fa fa-comment" aria-hidden="true"></i></button>
         </td>
+        <td><button type="button" class="btn btn-dark" onclick="editCar(this)" id="edit-<?php echo $car['id'];?>"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+        <td><button type="button" class="btn btn-dark" onclick="commentsCar(this)" id="comments-<?php echo $car['id'];?>"><i class="fa fa-comment" aria-hidden="true"></i></button></td>
       </tr>
   <?php
     }
   ?>
     <tr>
       <td><button type="button" class="btn btn-success" onclick="fillContent('addNewCar')">Add new car</button></td>
+      <td></td>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>

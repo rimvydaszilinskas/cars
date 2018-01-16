@@ -19,12 +19,12 @@
       <th>Sekm</th>
     </tr>
     <tr>
+      <?php for($y = 1; $y < get_start_of_month_number($month, $year); $y++){ ?>
+        <td></td>
+      <?php } ?>
       <?php for($i = 1; $i <= get_day_count($month, $year); $i++){ ?>
         <!-- skip the days we dont have -->
-        <?php for($y = 0; $y < get_start_of_month_number($month, $year); $y++){ ?>
-          <td></td>
-        <?php } ?>
-        <td class="reserve-calendar <?php echo ($today == $i) ? 'table-primary': ''; ?>"><a class="reserve-link" href="#" data-toggle="modal" data-target="#postModal"><?php echo $i; ?></a></td>
+        <td class="reserve-calendar <?php echo ($today == $i) ? 'table-primary': ''; ?>"><?php echo ($i>=$today)?'<a class="reserve-link" href="#" data-toggle="modal" data-target="#postModal">': ''?><?php echo $i; ?><?php echo ($i >= $today)?'</a>':''?></td>
         <!-- check if theres need to be a split for weeks -->
         <?php if(check_end_of_week($i, $month, $year)){ ?>
         </tr><tr>
@@ -33,7 +33,6 @@
     </tr>
   </table>
 </div>
-
 
 <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -44,7 +43,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="submit" action="php/functions/reserveCar.php">
+      <form method="post" action="php/functions/reserveCar.php">
       <div class="modal-body">
 
           <div class="form-group">

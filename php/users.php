@@ -17,6 +17,8 @@
     <th scope="col">Tel. nr.</th>
     <th scope="col">El. pastas</th>
     <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
   </tr>
   <?php while($user = mysqli_fetch_assoc($result)){ ?>
     <tr <?php if($user['Admin']==='1') echo 'class="table-primary"';?>>
@@ -39,6 +41,8 @@
     </tr>
   <?php } ?>
   <tr>
+    <td></td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
