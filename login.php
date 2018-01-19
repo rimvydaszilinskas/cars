@@ -23,11 +23,19 @@
             <label for="password">Slaptazodis</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="slaptazodis"></input>
           </div>
-          <button type="submit" class="btn btn-primary">Prisijungti</button>
+          <button type="submit" class="btn btn-primary loginButton">Prisijungti</button>
+          <a href="forgotPassword.php" class="forgotPassowrd">Pamiršote slaptažodį?</a>
         </form>
       </div>
     </div>
   </div>
+
+  <br><br>
+  <footer>
+    <center>
+      <strong>Powered by <a href="http://rimvydas.site" target="_blank">rimvydas.site</a></strong>
+    </center>
+  </footer>
 </body>
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>

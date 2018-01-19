@@ -5,6 +5,10 @@
   if(!isset($_SESSION['id']))
     header("location: login.php");
 
+  $user_messages = has_message($_SESSION['id']);
+
+  $has_messages = mysqli_num_rows($user_messages) != 0;
+
   //vars
   $message = "";
   $error = "";
@@ -80,7 +84,9 @@
             <?php if(has_drive($_SESSION['id'])){ ?>
   					<button type="button" class="btn btn-success btn-sm">Drive</button>
             <?php } ?>
-  					<button type="button" class="btn btn-danger btn-sm">Zinutes</button>
+            <?php if($has_messages){ ?>
+  					<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#messageModal" id="messageToggle">Zinutes</button>
+            <?php } ?>
   				</div>
   				<!-- END SIDEBAR BUTTONS -->
   				<!-- SIDEBAR MENU -->
@@ -148,6 +154,31 @@
   </footer>
   <br>
   <br>
+
+  <!-- Modal -->
+  <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Pranešimai</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?php while($message = mysqli_fetch_assoc($user_messages)){ ?>
+            <p class="post-date"><?php echo $message['date']; ?></p>
+            <hr>
+            <p class="post-body <?php echo ($message['read']=='0')?'unread':'';?>"><?php echo $message['message']; ?></p>
+          <?php } ?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Uždaryti</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>

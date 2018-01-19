@@ -181,3 +181,15 @@ a h4{
 .reserve-calendar:hover{
   background-color: #5a7391;
 }
+
+.loginButton .forgotPassowrd{
+  display: inline;
+}
+
+.forgotPassowrd{
+  font-size: 0.7em;
+}
+
+.unread{
+  color: red;
+}

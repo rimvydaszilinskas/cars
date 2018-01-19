@@ -3,6 +3,10 @@
     return urlencode ( $str );
   }
 
+  function mysql_escape($str){
+    return mysql_real_escape_string($str);
+  }
+
   //returns true/false if there are active announcements
   function check_for_announcements(){
     global $db;
@@ -309,6 +313,44 @@
     if($admin['admin']=='1')
       return true;
     return false;
+  }
+
+  //returns the approved message with the given values
+  function create_approved_message($year, $month, $day, $destination, $car, $license_plate){
+    global $db;
+
+    $date = $year . "-" . $month . "-" . $day;
+
+    $sql = "SELECT value FROM settings WHERE setting='default_approved_message' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+
+    $msg = mysqli_fetch_assoc($result);
+
+    $message = $msg["value"];
+
+    $message = str_replace('[data]', $date, $message);
+    $message = str_replace('[keliones_tikslas]', $destination, $message);
+    $message = str_replace('[automobilis]', $car . '[' . $license_plate . ']', $message);
+
+    return $message;
+  }
+
+  //
+  function has_message($id){
+    global $db;
+
+    $sql = "SELECT * FROM messages WHERE userid='$id'";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+
+    return $result;
   }
 
 ?>
