@@ -5,9 +5,16 @@
   // if(!isset($name))
   //   header("Location: ../../index.php");
 
-  if(!isset($_POST['name'])){
-
+  if(!isset($_POST['name']) || !isset($_POST['username']) || !isset($_POST['phone']) || !isset($_POST['email']) || !isset($_POST['position'])){
+    //exit
+    header("Location: ../../index.php?p=users&m=user_bad");
   }
+  
+  //exit if the username already exists in the system
+  if(username_exists($_POST['username'])){
+    header("Location: ../../index.php?p=addUser&m=user_exists");
+  }
+
   $name = $_POST['name'];
   $username = $_POST['username'];
   $phone = $_POST['phone'];
@@ -19,9 +26,9 @@
 
   $result = mysqli_query($db, $sql);
 
-  if(!$result)
+  if(!$result) // redirect to index.php with an error message
     header("Location: ../../index.php?p=users&m=user_bad");
-  else {
+  else {  //redirect to index.php with success message
     header("Location: ../../index.php?p=users&m=user_added&username=$username");
   }
 ?>

@@ -12,6 +12,8 @@
 ?>
 
 <div class="row">
+
+  <!-- announcements -->
   <?php if($is_announcements){ ?>
     <div class="col-md-5 card">
       <h3 class="card-title">Pranesimai</h3>
@@ -41,6 +43,7 @@
     </div>
   <?php } //end if announcements ?>
 
+  <!-- available cars -->
   <?php if(count($cars) != 0){ ?>
     <div class="col-md-5 card">
       <h3 class="card-title">Laisvi automobiliai</h3>
@@ -53,6 +56,7 @@
     </div>
   <?php } ?>
 
+  <!-- latest notes added  -->
   <?php if(isset($_SESSION['admin'])){ ?>
     <div class="col-md-5 card">
       <h5 class="card-title">Paskutines iterptos pastabos</h5>
@@ -60,9 +64,10 @@
     </div>
   <?php }?>
 
+  <!-- reservations -->
   <?php if(isset($_SESSION['admin'])){
           $count = 0; //reset the count to 0
-          if($requests != null){?>
+          if($requests != null && mysqli_num_rows($requests)){?>
     <div class="col-md-5 card">
       <h5 class="card-title">Nepatvirtintos uzklausos</h5>
       <hr/>
@@ -77,11 +82,12 @@
       } ?>
       </ul>
       <hr/>
-      <p class="post-title show-more-post">Ziureti visus...</p>
+      <p class="post-title show-more-post" href="#" onclick="reservations();">Ziureti visus...</p>
     </div>
-  <?php }
-      }?>
+    <?php } ?>
+  <?php } ?>
 
+  <!-- today -->
   <?php if(isset($_SESSION['admin'])){ ?>
     <div class="col-md-5 card">
       <h5 class="card-title">Siandien</h5>

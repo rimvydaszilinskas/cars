@@ -7,9 +7,10 @@
   $id = $_SESSION['id'];
   $date = $_POST['date'];
   $destination = $_POST['destination'];
+  $info = $_POST['info'];
   list($day, $month, $year) = explode("-", $date);
 
-  $sql = "INSERT INTO reservations (userid, day, month, year, carid, destination, distance, approved, note) VALUES ('$id', '$day', '$month', '$year', '0', '$destination', '0', '0', ' ');";
+  $sql = "INSERT INTO reservations (userid, day, month, year, carid, destination, distance, approved, note) VALUES ('$id', '$day', '$month', '$year', '0', '$destination', '0', '0', '$info');";
 
   $result = mysqli_query($db, $sql);
 

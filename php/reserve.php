@@ -45,7 +45,6 @@
       </div>
       <form method="post" action="php/functions/reserveCar.php">
       <div class="modal-body">
-
           <div class="form-group">
             <label for="date">Data</label>
             <input type="text" class="form-control" id="date-reserve" name="date"></input>
@@ -58,7 +57,6 @@
             <label for="info">Papildoma informacija</label>
             <textarea type="text" class="form-control" id="info" name="info"></textarea>
           </div>
-
       </div>
       <div class="modal-footer">
         <button tupe="submit" class="btn btn-primary">Siusti</button>

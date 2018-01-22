@@ -19,6 +19,10 @@
     <input type="text" class="form-control" id="name" name="name"value="<?php echo $user['name']; ?>"></input>
   </div>
   <div class="form-group">
+    <label for="username">Prisijungimo vardas</label>
+    <input readonly type="text" class="form-control" id="username" name="username" value="<?php echo $user['username']; ?>"></input>
+  </div>
+  <div class="form-group">
     <label for="number">Tel. numeris</label>
     <input type="text" class="form-control" id="number" name="number" value="<?php echo $user['phone']; ?>"></input>
   </div>

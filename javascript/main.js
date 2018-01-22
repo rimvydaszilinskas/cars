@@ -48,6 +48,24 @@ function reservations(){
   showNote("reservations");
 }
 
+function newUser(){
+  clearActive("userslink");
+  fillContent("addNewUser");
+  showNote("addNewUser");
+}
+
+function reservation(id){
+  var reservationID = id;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      body.innerHTML = this.responseText;
+    }//end if
+  }//end function()
+  xmlhttp.open("GET", "php/reservation.php?id=" + reservationID);
+  xmlhttp.send();
+}
+
 //hide all notes
 function hideNotes(){
   var notes = document.getElementsByClassName("index_note");

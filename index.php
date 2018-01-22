@@ -53,6 +53,18 @@
     } else if($msg == "password_change_success"){
       $message = "Sekmingai pakeistas slaptazodis!";
       $class = "home_note";
+    } else if($msg == "reservation_ok"){
+      $message = "Rezervacija patvirtinta!";
+      $class = "reservations_note";
+    } else if($msg == "reservation_ok_n"){
+      $message = "Reservacija sekmingai atnaujinta!";
+      $class = "reservations_note";
+    } else if($msg == "reservation_error"){
+      $error = "Negalima prisijungti prie duomenu bazes";
+      $class = "reservations_note";
+    } else if($msg == "user_exists"){
+      $error = "Toks vartotojo vardas jau egzistuoja!";
+      $class = "addNewUser_note";
     }
   } // end isset check
 ?>
@@ -116,9 +128,9 @@
                 <a class="nav-link" href="#"><h4><i class="fa fa-calendar" aria-hidden="true"></i></h4> Rezervacijos</a>
               </li>
               <?php } ?>
-              <li class="nav-item" onclick="settings()" id ="settingslink">
+              <!-- <li class="nav-item" onclick="settings()" id ="settingslink">
                 <a class="nav-link" href="#"><h4><i class="fa fa-cog" aria-hidden="true"></i></h4> Nustatymai</a>
-              </li>
+              </li> -->
               <li class="nav-item" id ="logoutlink">
                 <a class="nav-link" href="logout.php"><h4><i class="fa fa-sign-out" aria-hidden="true"></i></h4> Atsijungti</a>
               </li>
@@ -149,7 +161,7 @@
 
   <footer>
     <center>
-      <strong>Powered by <a href="http://rimvydas.site" target="_blank">rimvydas.site</a></strong>
+      Powered by <strong><a href="http://rimvydas.site" target="_blank">rimvydas.site</a></strong>
     </center>
   </footer>
   <br>
@@ -167,7 +179,7 @@
         </div>
         <div class="modal-body">
           <?php while($message = mysqli_fetch_assoc($user_messages)){ ?>
-            <p class="post-date"><?php echo $message['date']; ?></p>
+            <p class="post-date"><?php echo $message['sent']; ?></p>
             <hr>
             <p class="post-body <?php echo ($message['read']=='0')?'unread':'';?>"><?php echo $message['message']; ?></p>
           <?php } ?>

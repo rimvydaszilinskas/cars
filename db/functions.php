@@ -86,6 +86,10 @@
         echo "reserve();";
       else if($_GET['p'] === 'profile')
         echo "profile();";
+      else if($_GET['p'] === 'reservations')
+        echo "reservations();";
+      else if($_GET['p'] === 'newuser')
+        echo "newUser();";
       else {
         echo "home();";
       }
@@ -138,6 +142,26 @@
     return $user['position'];
   }
 
+  //checks if user exists
+  //returns true/false
+  function username_exists($username){
+    global $db;
+
+    $username = mysqli_real_escape_string($username);
+    $sql = "SELECT username FROM users WHERE username='$username';";
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+
+    //if there are any matching rows return true
+    if(mysqli_num_rows($result) != 0)
+      return true;
+
+    //default return false
+    return false;
+  }
+
   //return association car object
   function find_car($id){
     //return null if it doesnt have car assigned
@@ -156,6 +180,25 @@
     $car = mysqli_fetch_assoc($result);
 
     return $car;
+  }
+
+  //returns only the name of the given car
+  function find_car_name($id){
+    if($id == '0')
+      exit("Blogai nurodytas automobilis");
+
+    global $db;
+
+    $sql = "SELECT make FROM cars WHERE id='".$id."' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect");
+
+    $car = mysqli_fetch_assoc($result);
+
+    return $car['make'];
   }
 
   function get_hashed_default_password(){
@@ -339,7 +382,28 @@
     return $message;
   }
 
-  //
+  function create_rejected_message($year, $month, $day, $destination){
+    global $db;
+
+    $date = $year . "-" . $month . "-" . $day;
+
+    $sql = "SELECT value FROM settings WHERE setting='default_declined_message' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+
+    $msg = mysqli_fetch_assoc($result);
+
+    $message = $msg["value"];
+
+    $message = str_replace('[data]', $date, $message);
+    $message = str_replace('[keliones_tikslas]', $destination, $message);
+
+    return $message;
+  }
+
   function has_message($id){
     global $db;
 
@@ -353,4 +417,64 @@
     return $result;
   }
 
+  //returns association array of the request, otherwise quits
+  function find_reservation($id){
+    global $db;
+
+    $sql = "SELECT * FROM reservations WHERE id='$id' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+
+    return mysqli_fetch_assoc($result);
+  }
+
+  //returns an array of the ids of free cars
+  function find_free_cars($day, $month, $year){
+    global $db;
+
+    //variables
+    $free_cars = [];
+    $reserved_cars = [];
+
+    //find the cars already reserved on the given date
+    $sql = "SELECT * FROM reservations WHERE day='$day' AND month='$month' AND $year";
+    $result = mysqli_query($db, $sql);
+    if(!$result){
+      exit("Cannot connect to the database");
+    }
+    //extract the cars into an array
+    while($car = mysqli_fetch_assoc($result))
+      if($car['carid'] != 0)
+        $reserved_cars[] = $car['carid'];
+
+    //get all cars
+    $sql = "SELECT * FROM cars WHERE maintenance='0';";
+    $result = mysqli_query($db, $sql);
+    if(!$result){
+      exit("Cannot connect to the database");
+    }
+    //compare lists
+    while($car = mysqli_fetch_assoc($result)){
+      //if the car id is not added to the reserved_cars list
+      if(!contains($reserved_cars, $car['id'])){
+        //add it to free cars
+        $free_cars[] = $car['id'];
+      }
+    }
+
+    return $free_cars;
+  }
+
+  //checks if the array has value
+  //returns true/false
+  function contains($array, $value){
+    for($i = 0; $i < count($array); $i++){
+      if($array[$i] == $value)
+        return true;
+    }
+    return false;
+  }
 ?>
