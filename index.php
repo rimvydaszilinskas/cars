@@ -14,6 +14,12 @@
   $error = "";
   $class = "";
 
+  //get car info and reservation info
+  if(has_drive($_SESSION['id'])){
+    $reservation = reservation($_SESSION['id']);
+    $car = find_car($reservation['carid']);
+  }
+
   //set variable for displaying correct messages
   if(isset($_GET['m'])){
     $msg = $_GET['m'];
@@ -93,8 +99,11 @@
   				<!-- SIDEBAR BUTTONS -->
   				<div class="profile-userbuttons">
             <!-- display only if the user has a drive that day -->
-            <?php if(has_drive($_SESSION['id'])){ ?>
-  					<button type="button" class="btn btn-success btn-sm">Drive</button>
+            <?php if(has_drive($_SESSION['id']) && !drive_started($_SESSION['id'])){ ?>
+  					<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#driveModal" id="driveToggle">Pradeti kelione</button>
+            <?php } ?>
+            <?php if(has_drive($_SESSION['id']) && drive_started($_SESSION['id']) && !drive_finished($_SESSION['id'])){ ?>
+  					<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#driveEndModal" id="driveToggle">Uzbaigti kelione</button>
             <?php } ?>
             <?php if($has_messages){ ?>
   					<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#messageModal" id="messageToggle">Zinutes</button>
@@ -167,7 +176,7 @@
   <br>
   <br>
 
-  <!-- Modal -->
+  <!-- message modal -->
   <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -187,6 +196,70 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Uždaryti</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- drive start modal -->
+  <div class="modal fade" id="driveModal" tabindex="-1" role="dialog" aria-labelledby="driveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="driveModalLabel">Pradeti kelione</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="php/functions/startTrip.php?id=<?php echo $reservation['id']; ?>" method="post">
+        <div class="modal-body">
+          <p class="lead">Automobilis: <?php echo $car['make']; ?></p>
+          <div class="form-group">
+            <label for="start_mileage">Rida</label>
+            <input type="number" class="form-control" id="start_mileage" name="start_mileage" value="<?php echo $car['mileage']; ?>"></input>
+          </div>
+          <div class="form-group">
+            <label for="start_note">Pastabos</label>
+            <input type="text" class="form-control" id="start_note" name="start_note"></input>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Pradeti</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Uždaryti</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- drive end modal -->
+  <div class="modal fade" id="driveEndModal" tabindex="-1" role="dialog" aria-labelledby="driveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="driveModalLabel">Pabaigti kelione</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form action="php/functions/endTrip.php?id=<?php echo $reservation['id']; ?>" method="post">
+          <div class="modal-body">
+            <p class="lead">Automobilis: <?php echo $car['make']; ?></p>
+            <div class="form-group">
+              <label for="end_mileage">Rida</label>
+              <input type="number" class="form-control" id="end_mileage" name="end_mileage" placeholder="<?php echo $car['mileage']; ?>"></input>
+            </div>
+            <div class="form-group">
+              <label for="end_note">Pastabos</label>
+              <input type="text" class="form-control" id="end_note" name="end_note"></input>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Uzbaigti</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Uždaryti</button>
+          </div>
+          </form>
       </div>
     </div>
   </div>

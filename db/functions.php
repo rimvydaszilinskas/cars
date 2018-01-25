@@ -4,7 +4,7 @@
   }
 
   function mysql_escape($str){
-    return mysql_real_escape_string($str);
+    return mysqli_real_escape_string($str);
   }
 
   //returns true/false if there are active announcements
@@ -306,6 +306,61 @@
     return true;
   }
 
+  function reservation($id){
+    global $db;
+
+    $sql = "SELECT * FROM reservations WHERE userid='".$id."' AND day='".today()."' AND month='".get_month_number()."' AND year='".get_year()."' AND approved='1' LIMIT 1";
+
+    //$sql = "SELECT * FROM reservations WHERE userid='4' AND day='15' AND month='1' AND year='2018' AND approved='1' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+    if(!$result)
+      exit("Could not connect to the database");
+    if(mysqli_num_rows($result) == 0)
+      return null;
+
+    return mysqli_fetch_assoc($result);
+  }
+
+  function drive_finished($id){
+    $reservation = reservation($id);
+
+    if($reservation['distance'] == '0')
+      return false;
+    return true;
+  }
+
+  //get reservation on reservationID
+  function get_reservation($id){
+    global $db;
+
+    $sql = "SELECT * FROM reservations WHERE id='$id' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Could not connect to the database");
+
+    return mysqli_fetch_assoc($result);
+  }
+
+  function drive_started($id){
+    global $db;
+
+    $sql = "SELECT * FROM reservations WHERE userid='".$id."' AND day='".today()."' AND month='".get_month_number()."' AND year='".get_year()."' AND approved='1' LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    if(!$result)
+      exit("Cannot connect to the database");
+
+    $check = mysqli_fetch_assoc($result);
+
+    if($check['started'] == '0')
+      return false;
+    return true;
+  }
+
   //find all reservations from today on
   function find_all_reservations(){
     global $db;
@@ -477,4 +532,6 @@
     }
     return false;
   }
+
+
 ?>
